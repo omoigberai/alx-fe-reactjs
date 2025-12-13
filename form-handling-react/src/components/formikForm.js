@@ -2,59 +2,42 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-// Validation schema
-const RegistrationSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, "Username too short")
-    .max(20, "Username too long")
-    .required("Username is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password too short")
-    .required("Password is required"),
-});
-
 export default function FormikForm() {
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("Form data:", values);
-    alert("Form submitted! Check console for data.");
-    resetForm();
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const initialValues = { username: "", email: "", password: "" };
+
+  const handleSubmit = (values) => {
+    console.log(values);
+    alert("Form submitted!");
   };
 
   return (
-    <div>
-      <h2>Registration Form</h2>
-      <Formik
-        initialValues={{ username: "", email: "", password: "" }}
-        validationSchema={RegistrationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label>Username:</label>
-              <Field type="text" name="username" placeholder="Username" />
-              <ErrorMessage name="username" component="div" className="error" />
-            </div>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      <Form className="flex flex-col gap-4">
+        <div>
+          <Field name="username" type="text" placeholder="Username" className="border p-2 rounded w-full" />
+          <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
+        </div>
 
-            <div>
-              <label>Email:</label>
-              <Field type="email" name="email" placeholder="Email" />
-              <ErrorMessage name="email" component="div" className="error" />
-            </div>
+        <div>
+          <Field name="email" type="email" placeholder="Email" className="border p-2 rounded w-full" />
+          <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+        </div>
 
-            <div>
-              <label>Password:</label>
-              <Field type="password" name="password" placeholder="Password" />
-              <ErrorMessage name="password" component="div" className="error" />
-            </div>
+        <div>
+          <Field name="password" type="password" placeholder="Password" className="border p-2 rounded w-full" />
+          <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+        </div>
 
-            <button type="submit" disabled={isSubmitting}>
-              Register
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+          Register
+        </button>
+      </Form>
+    </Formik>
   );
 }
