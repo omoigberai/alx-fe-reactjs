@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function RegistrationForm() {
   const [username, setUsername] = useState("");
@@ -12,30 +12,37 @@ export default function RegistrationForm() {
       return;
     }
     console.log({ username, email, password });
-    // here you can call an API
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        className="border p-2 rounded"
       />
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="border p-2 rounded"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="border p-2 rounded"
       />
-      <button type="submit">Register</button>
+      <button
+        type="submit"
+        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+      >
+        Register
+      </button>
     </form>
   );
 }
