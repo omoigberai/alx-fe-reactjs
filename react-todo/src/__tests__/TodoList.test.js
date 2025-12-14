@@ -9,9 +9,7 @@ describe("TodoList component", () => {
 
   test("adds a new todo", () => {
     render(<TodoList />);
-    fireEvent.change(screen.getByPlaceholderText("Add todo"), {
-      target: { value: "New Todo" },
-    });
+    fireEvent.change(screen.getByPlaceholderText("Add todo"), { target: { value: "New Todo" } });
     fireEvent.click(screen.getByText("Add"));
     expect(screen.getByText("New Todo")).toBeInTheDocument();
   });
